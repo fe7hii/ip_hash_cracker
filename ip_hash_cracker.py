@@ -4,7 +4,7 @@ import time
 
 TARGET_HASH = ""  # Replace with the target MD5 hash you want to find
 
-TOTAL_IPS = 256 ** 4  
+TOTAL_IPS = 256 ** 4
 
 def search_chunk(start, end, result_queue):
     for i in range(start, end):
@@ -21,10 +21,10 @@ def main():
     num_cores = multiprocessing.cpu_count()
     chunk_size = TOTAL_IPS // num_cores
 
-    print(f"Hedef hash  : {TARGET_HASH}")
-    print(f"Kullanılan core : {num_cores}")
-    print(f"Toplam IP   : {TOTAL_IPS:,}")
-    print("Taranıyor...\n")
+    print(f"Target hash  : {TARGET_HASH}")
+    print(f"CPU cores    : {num_cores}")
+    print(f"Total IPs    : {TOTAL_IPS:,}")
+    print("Scanning...\n")
 
     result_queue = multiprocessing.Queue()
     processes = []
@@ -61,12 +61,12 @@ def main():
 
     if found:
         verification = hashlib.md5(found.encode()).hexdigest()
-        print(f"BULUNDU!  →  {found}")
-        print(f"Süre        : {elapsed:.2f} saniye")
-        print(f"Doğrulama   : md5('{found}') = {verification}")
-        print(f"Eşleşiyor mu: {verification == TARGET_HASH}")
+        print(f"FOUND!       →  {found}")
+        print(f"Elapsed      : {elapsed:.2f} seconds")
+        print(f"Verification : md5('{found}') = {verification}")
+        print(f"Match        : {verification == TARGET_HASH}")
     else:
-        print(f"Bulunamadı. Süre: {elapsed:.2f} saniye")
+        print(f"Not found. Elapsed: {elapsed:.2f} seconds")
 
 if __name__ == "__main__":
     main()
